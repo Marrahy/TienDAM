@@ -8,9 +8,9 @@ public class Articulo {
     }
 
     //Attributes
-    private final String name = "";
+    private String name = "";
     private double priceWithOutIVA;
-    private final IVAType IVA = IVAType.NORMAL;
+    private IVAType IVA = IVAType.NORMAL;
     private int quantity;
 
     private TienDAM dialogue = new TienDAM();
@@ -22,13 +22,21 @@ public class Articulo {
 
     //Cosntructor
     public Articulo(String name, double priceWithOutIVA, IVAType IVA, int quantity) {
-        setPriceWithOutIVA(priceWithOutIVA);
+        setName(name);
+        setPriceWithoutIVA(priceWithOutIVA);
+        setIVA(IVA);
         setQuantity(quantity);
     }
 
     //Setters
-    public void setPriceWithOutIVA(double priceWithOutIVA) {
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPriceWithoutIVA(double priceWithOutIVA) {
         this.priceWithOutIVA = priceWithOutIVA;
+    }
+    public void setIVA(IVAType iVA) {
+        IVA = iVA;
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;

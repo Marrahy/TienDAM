@@ -4,6 +4,7 @@ public class Almacen {
 
     //Attributes
     private ArrayList<Articulo> articulos = new ArrayList<>();
+    private static int numArticles = 0;
 
     //Empty Constructor
     public Almacen() {
@@ -27,29 +28,31 @@ public class Almacen {
 
     //Methods
     public boolean addItem(Articulo item) {
-        //manage.addItem();
-        return true;
-    }
-
-    public boolean addItem(String name, double price, Articulo.IVAType IVA, int quantity) {
-        //manage.addItem();
+        articulos.add(numArticles, item);
+        numArticles++;
         return true;
     }
 
     public boolean removeItem(int position) {
-        //manage.removeItem
+        
         return true;
     }
 
     public boolean modifyItemPrice(int position, int price) {
-        //manage.modifyItemPrice
-        return true;
+        if (price > 0) {
+            Articulo article = articulos.get(position);
+            article.setPriceWithoutIVA(price);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void searchItem(String name) {
-        for (Articulo a : articulos) {
-            if (a.getName().contains(name))
-                System.out.println(a);
+        for (Articulo article : articulos) {
+            if (article.getName().contains(name)) {
+                System.out.println(article);
+            }
         }
     }
 
@@ -59,5 +62,12 @@ public class Almacen {
 
     public void sendBack(int position, int quantity) {
         articulos.get(position).decrease(quantity);
+    }
+
+    public void showArticles() {
+        for (int i = 0; i < articulos.size(); i++) {
+            Articulo getArticle = articulos.get(i);
+            System.out.println("Nombre: " + getArticle.getName() + " Precio sin IVA: " + getArticle.getPriceWithOutIVA() + "$" + " Tipo de IVA: " + getArticle.getIVA() + " Cantidad en stock: " + getArticle.getQuantity() + " unidades.");
+        }
     }
 }
