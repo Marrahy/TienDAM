@@ -34,13 +34,18 @@ public class Almacen {
     }
 
     public boolean removeItem(int position) {
-        
-        return true;
+        if (position <= numArticles && position > 0) {
+            articulos.remove(position - 1);
+            numArticles--;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean modifyItemPrice(int position, int price) {
         if (price > 0) {
-            Articulo article = articulos.get(position);
+            Articulo article = articulos.get(position - 1);
             article.setPriceWithoutIVA(price);
             return true;
         } else {
@@ -49,25 +54,26 @@ public class Almacen {
     }
 
     public void searchItem(String name) {
+        int pos = 1;
         for (Articulo article : articulos) {
             if (article.getName().contains(name)) {
-                System.out.println(article);
+                System.out.println((pos + 1) + "Nombre: " + article.getName());
             }
         }
     }
 
     public void recieve(int position, int quantity) {
-        articulos.get(position).increase(quantity);
+        articulos.get(position - 1).increase(quantity);
     }
 
     public void sendBack(int position, int quantity) {
-        articulos.get(position).decrease(quantity);
+        articulos.get(position - 1).decrease(quantity);
     }
 
     public void showArticles() {
         for (int i = 0; i < articulos.size(); i++) {
             Articulo getArticle = articulos.get(i);
-            System.out.println("Nombre: " + getArticle.getName() + " Precio sin IVA: " + getArticle.getPriceWithOutIVA() + "$" + " Tipo de IVA: " + getArticle.getIVA() + " Cantidad en stock: " + getArticle.getQuantity() + " unidades.");
+            System.out.println((i + 1) + ". " + "Nombre: " + getArticle.getName() + " Precio sin IVA: " + getArticle.getPriceWithoutIVA() + "$" + " Tipo de IVA: " + getArticle.getIVA() + " Cantidad en stock: " + getArticle.getQuantity() + " unidades.");
         }
     }
 }

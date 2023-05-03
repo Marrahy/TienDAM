@@ -9,7 +9,7 @@ public class Articulo {
 
     //Attributes
     private String name = "";
-    private double priceWithOutIVA;
+    private double priceWithoutIVA;
     private IVAType IVA = IVAType.NORMAL;
     private int quantity;
 
@@ -21,9 +21,9 @@ public class Articulo {
     }
 
     //Cosntructor
-    public Articulo(String name, double priceWithOutIVA, IVAType IVA, int quantity) {
+    public Articulo(String name, double priceWithoutIVA, IVAType IVA, int quantity) {
         setName(name);
-        setPriceWithoutIVA(priceWithOutIVA);
+        setPriceWithoutIVA(priceWithoutIVA);
         setIVA(IVA);
         setQuantity(quantity);
     }
@@ -33,7 +33,7 @@ public class Articulo {
         this.name = name;
     }
     public void setPriceWithoutIVA(double priceWithOutIVA) {
-        this.priceWithOutIVA = priceWithOutIVA;
+        this.priceWithoutIVA = priceWithOutIVA;
     }
     public void setIVA(IVAType iVA) {
         IVA = iVA;
@@ -46,8 +46,8 @@ public class Articulo {
     public String getName() {
         return name;
     }
-    public double getPriceWithOutIVA() {
-        return priceWithOutIVA;
+    public double getPriceWithoutIVA() {
+        return priceWithoutIVA;
     }
     public IVAType getIVA() {
         return IVA;

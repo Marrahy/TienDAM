@@ -26,11 +26,12 @@ public class TienDAM {
         System.out.println();
         System.out.println("1. Añadir artículo.");
         System.out.println("2. Remover artículo.");
-        System.out.println("3. Modificar artículo.");
+        System.out.println("3. Modificar precio del artículo.");
         System.out.println("4. Ver artículos.");
-        System.out.println("5. Recibir cantidad de atículos.");
-        System.out.println("6. Devolver cantidad de artículos.");
-        System.out.println("7. Salir al menú principal.");
+        System.out.println("5. Buscar artículo.");
+        System.out.println("6. Recibir cantidad de atículos.");
+        System.out.println("7. Devolver cantidad de artículos.");
+        System.out.println("8. Salir al menú principal.");
         System.out.println();
         System.out.print("Selecciona una opción: ");
         int option = input.nextInt();
@@ -40,10 +41,28 @@ public class TienDAM {
         return option;
     }
 
+    public static int orderDialogue() {
+        System.out.println("Has accedido al menú de pedido, se ha creado un nuevo pedido.");
+        System.out.println();
+        System.out.println("1. Añadir artículo a la cesta.");
+        System.out.println("2. Quitar artículo de la cesta.");
+        System.out.println("3. Modificar cantidad de un artículo");
+        System.out.println("4. Aplicar descuento.");
+        System.out.println("5. Comprar.");
+        System.out.println("6. Salir al menú principal.");
+        System.out.println("Selecciona una opción: ");
+        int option = input.nextInt();
+        System.out.println();
+
+        bufferCleaner();
+
+        return option;
+    }
+
     public static void menu() {        
         System.out.println();
         System.out.println("1. Almacén");
-        System.out.println("2. Artículo");
+        System.out.println("2. Pedido");
         System.out.println("3. Salir");
         System.out.print("Selecciona una opción: ");
         int option = input.nextInt();
@@ -67,10 +86,15 @@ public class TienDAM {
                         storage.showArticles();
                     break;
                     case 5:
+                        storage.searchItem(getName());
                     break;
                     case 6:
+                        storage.recieve(getPosition(), getQuantity());
                     break;
                     case 7:
+                        storage.sendBack(getPosition(), getQuantity());
+                    break;
+                    case 8:
                         menu();
                     break;
                     default:
@@ -79,8 +103,32 @@ public class TienDAM {
                 System.out.println();
             break;
             case 2:
+                switch (orderDialogue()) {
+                    case 1:
+                        
+                    break;
+                    case 2:
+
+                    break;
+                    case 3:
+
+                    break;
+                    case 4:
+
+                    break;
+                    case 5:
+
+                    break;
+                    case 6:
+
+                    break;
+                    default:
+                        break;
+                }
             break;
             case 3:
+                System.out.println("Taluego!");
+                running = false;
             break;
             default:
                 break;
@@ -135,5 +183,12 @@ public class TienDAM {
             getQuantity();
             return 0;
         }
+    }
+
+    public static String getName() {
+        System.out.println();
+        System.out.print("Nombre del producto: ");
+        String name = input.nextLine();
+        return name;
     }
 }
