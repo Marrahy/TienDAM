@@ -8,8 +8,11 @@ public class Pedido {
     private double discountPercentage;
     private double subtotal;
     private double finalPrice;
+    private int numMaxArticles = 0;
 
-    ArrayList<Pedido> ticket = new ArrayList<>();
+    private ArrayList<Articulo> ticket = new ArrayList<>();
+    private Almacen manageStorage = new Almacen();
+    private Articulo manageArticle = new Articulo();
 
     //Empty constructor
     public Pedido() {
@@ -60,24 +63,69 @@ public class Pedido {
     }
 
     //Methods
-    //addClientID(String name)
     public String addClientID(String name) {
         this.name = name;
         return name;
     }
-    //getNumTicketID()
+
     public int getNumTicketID() {
         int ID = (int)(Math.random() * (999999 - 100000) + 100000);
         this.ticketID = ID;
         return ID;
     }
-    //addArticle(int position)
-    public void addArticle(int position) {
+
+    /*
+     * Metodo recoge una posicion introducida por el usuario, esta posicion es la posicion en la array de articulos de almacen
+     * este articulo se añade a la array de articulos de pedido
+     */
+
+    public void addArticleToOrder(int position) {
+        Articulo article = manageStorage.getArticulo(position - 1);
+        ticket.add(numMaxArticles, article);
+        numMaxArticles++;
+    }
+
+    public boolean removeArticleFromOrder(int position) {
+        if (position <= numMaxArticles && position > 0) {
+            ticket.remove(position - 1);
+            numMaxArticles--;
+            return true;
+        } else {
+            return false;
+        }
 
     }
-    //removeArticle(int position)
-    //modifyArticleQuantity(int position, int quantity)
-    //addDiscount()
-    //doSell()
+
+    public boolean modifyArticleQuantity(int position, int quantity) {
+        if (manageArticle.getQuantity() > quantity) {
+            manageArticle.setQuantity(quantity);
+            return true;
+        } else {
+            System.out.println("Artículo agotado.");
+            return false;
+        }
+    }
+
+    public boolean addDiscount(double discountPercentaje) {
+        this.discountPercentage = discountPercentaje;
+        return true;
+    }
+
+    public void doSell() {
+        System.out.println("Cliente: " + getName() + "          " + "ID del ticket: " + getNumTicketID());
+        System.out.println("Artículo" + "               " + "Precio sin IVA" + "                " + "Cantidad" + "              " + "Tipo de IVA");
+        for (int i = 0; i < ticket.size(); i++) {
+            System.out.println((i + 1) +". " + manageArticle.getName() + "                " + manageArticle.getPriceWithoutIVA() + "                " + manageArticle.getQuantity() + "             " + manageArticle.getIVA());
+        }
+        System.out.println("Descuento a aplicar: " + getDiscountPercentage());
+        System.out.println("Subtotal: " + getSubtotal() + "             " + "Precio final: " + getFinalPrice());
+    }
+
     //showBasket()
+    public void showBasket() {
+        for (int i = 0; i < ticket.size(); i++) {
+            Articulo getArticle = ticket.get(i);
+            System.out.println((i + 1) + ". " + "Nombre: " + getArticle.getName() + " Precio sin IVA: " + getArticle.getPriceWithoutIVA() + "$" + " Tipo de IVA: " + getArticle.getIVA() + " Cantidad en stock: " + getArticle.getQuantity() + " unidades.");
+        }
+    }
 }

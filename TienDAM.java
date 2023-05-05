@@ -3,14 +3,14 @@ import java.util.Scanner;
 public class TienDAM {
     
     private static Scanner input = new Scanner(System.in);
-    private static Almacen storage = new Almacen();
+    private static Almacen manageStorage = new Almacen();
+    private static Pedido manageOrder = new Pedido();
     private static Articulo.IVAType IVA;
     private static boolean running = true;
 
     public static void main(String[] args) {
+        manageStorage.loadStorageArticles();
         System.out.println("!Bienvenido a TienDAM!");
-        //storage.load();
-        //articulo.load();
         while (running) {
             menu();
         }
@@ -42,6 +42,7 @@ public class TienDAM {
     }
 
     public static int orderDialogue() {
+        System.out.println();
         System.out.println("Has accedido al menú de pedido, se ha creado un nuevo pedido.");
         System.out.println();
         System.out.println("1. Añadir artículo a la cesta.");
@@ -50,7 +51,8 @@ public class TienDAM {
         System.out.println("4. Aplicar descuento.");
         System.out.println("5. Comprar.");
         System.out.println("6. Salir al menú principal.");
-        System.out.println("Selecciona una opción: ");
+        System.out.println();
+        System.out.print("Selecciona una opción: ");
         int option = input.nextInt();
         System.out.println();
 
@@ -64,6 +66,7 @@ public class TienDAM {
         System.out.println("1. Almacén");
         System.out.println("2. Pedido");
         System.out.println("3. Salir");
+        System.out.println();
         System.out.print("Selecciona una opción: ");
         int option = input.nextInt();
         System.out.println();
@@ -72,27 +75,29 @@ public class TienDAM {
             case 1:
                 switch (storageDiaologue()) {
                     case 1:
-                        storage.addItem(addArticle());
+                        manageStorage.addItem(addArticle());
                     break;
                     case 2:
-                        storage.showArticles();
-                        storage.removeItem(getPosition());
+                        manageStorage.showArticles();
+                        manageStorage.removeItem(getPosition());
                     break;
                     case 3:
-                        storage.showArticles();
-                        storage.modifyItemPrice(getPosition(), getQuantity());
+                        manageStorage.showArticles();
+                        manageStorage.modifyItemPrice(getPosition(), getQuantity());
                     break;
                     case 4:
-                        storage.showArticles();
+                        manageStorage.showArticles();
                     break;
                     case 5:
-                        storage.searchItem(getName());
+                        manageStorage.searchItem(getName());
                     break;
                     case 6:
-                        storage.recieve(getPosition(), getQuantity());
+                        manageStorage.showArticles();
+                        manageStorage.recieve(getPosition(), getQuantity());
                     break;
                     case 7:
-                        storage.sendBack(getPosition(), getQuantity());
+                        manageStorage.showArticles();
+                        manageStorage.sendBack(getPosition(), getQuantity());
                     break;
                     case 8:
                         menu();
@@ -103,12 +108,24 @@ public class TienDAM {
                 System.out.println();
             break;
             case 2:
+            System.out.println("1. Añadir artículo a la cesta.");
+            System.out.println("2. Ver la cesta.");
+            System.out.println("3. Modificar cantidad de un artículo");
+            System.out.println("4. Aplicar descuento.");
+            System.out.println("5. Comprar.");
+            System.out.println("6. Salir al menú principal.");
+    
                 switch (orderDialogue()) {
                     case 1:
-                        
+                        addClientName();
+                        manageOrder.getNumTicketID();
+                        System.out.println();
+                        manageStorage.showArticles();
+                        System.out.println();
+                        manageOrder.addArticleToOrder(getPosition());
                     break;
                     case 2:
-
+                        manageOrder.showBasket();
                     break;
                     case 3:
 
@@ -190,5 +207,11 @@ public class TienDAM {
         System.out.print("Nombre del producto: ");
         String name = input.nextLine();
         return name;
+    }
+
+    public static void addClientName() {
+        System.out.print("Nombre del cliente: ");
+        String name = input.nextLine();
+        manageOrder.addClientID(name);
     }
 }
