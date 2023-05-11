@@ -93,7 +93,6 @@ public class Pedido {
         } else {
             return false;
         }
-
     }
 
     public boolean modifyArticleQuantity(int position, int quantity) {
