@@ -61,6 +61,19 @@ public class TienDAM {
         return option;
     }
 
+    public static Articulo.IVAType getIVATtype(int ivaSelected) {
+        if (ivaSelected == 1) {
+            IVA = Articulo.IVAType.NORMAL;
+        }
+        else if (ivaSelected == 2) {
+            IVA = Articulo.IVAType.REDUCIDO;
+        }
+        else {
+            IVA = Articulo.IVAType.SUPERREDUCIDO;
+        }
+        return IVA;
+    }
+
     public static void menu() {        
         System.out.println();
         System.out.println("1. Almacén");
@@ -109,11 +122,12 @@ public class TienDAM {
             break;
             case 2:
             System.out.println("1. Añadir artículo a la cesta.");
-            System.out.println("2. Ver la cesta.");
-            System.out.println("3. Modificar cantidad de un artículo");
-            System.out.println("4. Aplicar descuento.");
-            System.out.println("5. Comprar.");
-            System.out.println("6. Salir al menú principal.");
+            System.out.println("2. Quitar artículo de la cesta.");
+            System.out.println("3. Modificar cantidad de un artículo.");
+            System.out.println("4. Modificar lista de artículos.");
+            System.out.println("5. Aplicar descuento.");
+            System.out.println("6. Comprar.");
+            System.out.println("7. Salir al menú principal.");
     
                 switch (orderDialogue()) {
                     case 1:
@@ -122,13 +136,21 @@ public class TienDAM {
                         System.out.println();
                         manageStorage.showArticles();
                         System.out.println();
-                        manageOrder.addArticleToOrder(getPosition());
+                        manageOrder.addArticleToOrder(manageStorage.getArticle(getPosition(), getQuantity()));
                     break;
                     case 2:
                         manageOrder.showBasket();
+                        System.out.print("Introduce el número del artículo: ");
+                        int position = input.nextInt();
+                        manageOrder.removeArticleFromOrder(position);
                     break;
                     case 3:
-
+                        manageOrder.showBasket();
+                        System.out.print("Escribe el número del atículo: ");
+                        int articlePosition = input.nextInt();
+                        System.out.print("Introduce una cantidad: ");
+                        int quantity = input.nextInt();
+                        manageOrder.modifyArticleQuantity(articlePosition, quantity);
                     break;
                     case 4:
 
@@ -163,14 +185,10 @@ public class TienDAM {
         System.out.println("3. IVA Superreducido (4%)");
         System.out.print("Selecciona el tipo de IVA: ");
         int ivaSelected = input.nextInt();
-        if (ivaSelected == 1) {
-            IVA = Articulo.IVAType.NORMAL;
-        }
-        else if (ivaSelected == 2) {
-            IVA = Articulo.IVAType.REDUCIDO;
-        }
-        else {
-            IVA = Articulo.IVAType.SUPERREDUCIDO;
+        try {
+            getIVATtype(ivaSelected);
+        } catch (NumberFormatException stringTry) {
+            System.out.println("Introduce un número del 1 al 3.");
         }
         System.out.print("Número de artículos almacenados: ");
         int quantity = input.nextInt();
@@ -185,21 +203,13 @@ public class TienDAM {
     public static int getPosition() {
         System.out.print("Introduce el número del artículo: ");
         int position = input.nextInt();
-
         return position;
     }
 
     public static int getQuantity() {
         System.out.print("Introduce una cantidad: ");
         int quantity = input.nextInt();
-
-        if (quantity > 0) {
-            return quantity;    
-        } else {
-            System.out.println("Introduce una cantidad válida.");
-            getQuantity();
-            return 0;
-        }
+        return quantity;
     }
 
     public static String getName() {

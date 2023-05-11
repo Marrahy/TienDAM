@@ -8,9 +8,9 @@ public class Articulo {
     }
 
     //Attributes
-    private String name = "";
+    private String name;
     private double priceWithoutIVA;
-    private IVAType IVA = IVAType.NORMAL;
+    private IVAType IVA;
     private int quantity;
 
     private TienDAM dialogue = new TienDAM();

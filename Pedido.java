@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class Pedido {
 
@@ -11,7 +12,6 @@ public class Pedido {
     private int numMaxArticles = 0;
 
     private ArrayList<Articulo> ticket = new ArrayList<>();
-    private Almacen manageStorage = new Almacen();
     private Articulo manageArticle = new Articulo();
 
     //Empty constructor
@@ -79,18 +79,24 @@ public class Pedido {
      * este articulo se añade a la array de articulos de pedido
      */
 
-    public void addArticleToOrder(int position) {
-        Articulo article = manageStorage.getArticulo(position - 1);
-        ticket.add(numMaxArticles, article);
+    public Articulo addArticleToOrder(Articulo article) {
+        ticket.add(article);
         numMaxArticles++;
+        return article;
     }
 
     public boolean removeArticleFromOrder(int position) {
-        if (position <= numMaxArticles && position > 0) {
+        if (position < 1 || position > ticket.size()) {
+            System.out.println("Posición incorrecta, introduce una posición que esté dentro de los límites.");
+            return false;
+        }
+
+        try {
             ticket.remove(position - 1);
             numMaxArticles--;
             return true;
-        } else {
+        } catch (InputMismatchException e) {
+            System.out.println("Introduce un valor entero.");
             return false;
         }
     }

@@ -94,8 +94,10 @@ public class Almacen {
         }
     }
 
-    public Articulo getArticulo(int position) {
-        Articulo article = articles.get(position);
+    public Articulo getArticle(int position, int quantity) {
+        Articulo article = articles.get(position - 1);
+        int orderQuantity = article.getQuantity() - quantity;
+        article.setQuantity(orderQuantity);
         return article;
     }
 }
